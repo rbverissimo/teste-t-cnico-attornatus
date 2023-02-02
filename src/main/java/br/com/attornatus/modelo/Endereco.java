@@ -3,6 +3,11 @@ package br.com.attornatus.modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+
+@Entity
 public class Endereco implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +16,12 @@ public class Endereco implements Serializable{
 	private String cep;
 	private String numero;
 	private String cidade;
-	private boolean principal;
+	
+	@JoinColumn(name="pessoa_id", nullable = false)
+	private Pessoa pessoa;
+	
+	@Column(name="endereco_princial", nullable = false)
+	private boolean enderecoPrincipal;
 	
 	
 	public Endereco() {}
@@ -48,14 +58,24 @@ public class Endereco implements Serializable{
 		this.cidade = cidade;
 	}
 	
-	public boolean isPrincipal() {
-		return principal;
+	
+	
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setPrincipal(boolean principal) {
-		this.principal = principal;
-	} 
-	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public boolean isEnderecoPrincipal() {
+		return enderecoPrincipal;
+	}
+
+	public void setEnderecoPrincipal(boolean enderecoPrincipal) {
+		this.enderecoPrincipal = enderecoPrincipal;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(cep, cidade, logradouro, numero);
