@@ -23,7 +23,7 @@ public class PessoaServices {
 		
 		return repositorio.findById(id)
 				.orElseThrow(() -> 
-					new ResourceNotFoundException("No records found for this ID")); 
+					new ResourceNotFoundException("Nenhuma pessoa encontrada nesse ID")); 
 	}
 	
 	
@@ -47,7 +47,12 @@ public class PessoaServices {
 				new ResourceNotFoundException("No records found for this ID"));
 		
 		pessoaRecebida.setNome(p.getNome());
-		pessoaRecebida.setDataDeNascimento(p.getDataDeNascimento());
+		try {
+			pessoaRecebida.setDataDeNascimento(p.getDataDeNascimento());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		pessoaRecebida.setEnderecos(p.getEnderecos());
 		
 		return repositorio.save(pessoaRecebida); 

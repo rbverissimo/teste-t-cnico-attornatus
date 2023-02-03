@@ -1,7 +1,7 @@
 package br.com.attornatus.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,9 +29,9 @@ public class Pessoa implements Serializable {
 	private String nome;
 	
 	@Column(name="data-de-nascimento")
-	private Date dataDeNascimento;
+	private String dataDeNascimento;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "enderecos")
 	private List<Endereco> enderecos;
 	
 	public Pessoa() {}
@@ -52,12 +52,18 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	public Date getDataDeNascimento() {
+	public String getDataDeNascimento() {
 		return dataDeNascimento;
 	}
 
-	public void setDataDeNascimento(Date dataDeNascimento) {
-		this.dataDeNascimento = dataDeNascimento;
+	public void setDataDeNascimento(String dataDeNascimento) throws Exception {
+		
+		if(dataDeNascimento.length() >= 9) {
+			throw new Exception("Data inválida");
+		}
+		String padrao = "dd/mm/yyyy";
+		SimpleDateFormat dataFormatada = new SimpleDateFormat(padrao);
+		this.dataDeNascimento = dataFormatada.format(dataDeNascimento);
 	}
 
 	

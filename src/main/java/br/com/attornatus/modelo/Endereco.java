@@ -3,12 +3,14 @@ package br.com.attornatus.modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,15 +28,40 @@ public class Endereco implements Serializable{
 	private String numero;
 	private String cidade;
 	
-	@JoinColumn(name="pessoa_id", nullable = false)
+	@JoinColumn(name="pessoa_id",
+				nullable = false)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Pessoa pessoa;
 	
-	@Column(name="endereco_princial", nullable = false)
+	@Column(name="end_princial", nullable = false)
 	private boolean enderecoPrincipal;
 	
 	
 	public Endereco() {}
 	
+	
+	
+	public Endereco(String logradouro, String cep, String numero, String cidade, Pessoa pessoa,
+			boolean enderecoPrincipal) {
+		super();
+		this.logradouro = logradouro;
+		this.cep = cep;
+		this.numero = numero;
+		this.cidade = cidade;
+		this.pessoa = pessoa;
+		this.enderecoPrincipal = enderecoPrincipal;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
 	public String getLogradouro() {
 		return logradouro;
 	}
